@@ -1,6 +1,6 @@
 # moodoc
 
-This is a fork of the [moodle-docker] repo from moodlehq. The purpose of
+This is a fork of the [moodle-docker](https://github.com/moodlehq/moodle-docker) repo from moodlehq. The purpose of
 this project is to make it easy to spin up a version of moodle for
 testing with a single command on docker. This was created out of
 a general frustration of docker images not working properly, or missing
