@@ -1,0 +1,23 @@
+local.yml
+/moodle/
+
+# ignore all moodle versions
+moodle-*/
+
+# ignore IDE and MacOS system files
+.idea/
+.DS_Store
+.vscode/
+
+# Ignore envs
+.env
+.env.local
+.env.*.local
+
+# Ignore any modules
+yarn.lock
+package-lock.json
+node_modules
+vendor
+
+
