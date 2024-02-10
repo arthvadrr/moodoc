@@ -1,16 +1,16 @@
-<?php  // Moodle configuration file
+<?php // Moodle configuration file
 
 unset($CFG);
 global $CFG;
 $CFG = new stdClass();
 
-$CFG->dbtype    = getenv('MOODLE_DOCKER_DBTYPE');
+$CFG->dbtype = getenv('MOODLE_DOCKER_DBTYPE');
 $CFG->dblibrary = 'native';
-$CFG->dbhost    = 'db';
-$CFG->dbname    = getenv('MOODLE_DOCKER_DBNAME');
-$CFG->dbuser    = getenv('MOODLE_DOCKER_DBUSER');
-$CFG->dbpass    = getenv('MOODLE_DOCKER_DBPASS');
-$CFG->prefix    = 'm_';
+$CFG->dbhost = 'db';
+$CFG->dbname = getenv('MOODLE_DOCKER_DBNAME');
+$CFG->dbuser = getenv('MOODLE_DOCKER_DBUSER');
+$CFG->dbpass = getenv('MOODLE_DOCKER_DBPASS');
+$CFG->prefix = 'm_';
 $CFG->dboptions = ['dbcollation' => getenv('MOODLE_DOCKER_DBCOLLATION')];
 
 if (getenv('MOODLE_DOCKER_DBTYPE') === 'sqlsrv') {
@@ -26,7 +26,7 @@ if (empty($_SERVER['HTTP_HOST'])) {
 }
 if (strpos($_SERVER['HTTP_HOST'], '.gitpod.io') !== false) {
     // Gitpod.io deployment.
-    $CFG->wwwroot   = 'https://' . $_SERVER['HTTP_HOST'];
+    $CFG->wwwroot = 'https://' . $_SERVER['HTTP_HOST'];
     $CFG->sslproxy = true;
     // To avoid registration form.
     $CFG->site_is_public = false;
@@ -36,7 +36,7 @@ if (strpos($_SERVER['HTTP_HOST'], '.gitpod.io') !== false) {
     if (!empty(getenv('MOODLE_DOCKER_WEB_HOST'))) {
         $host = getenv('MOODLE_DOCKER_WEB_HOST');
     }
-    $CFG->wwwroot   = "http://{$host}";
+    $CFG->wwwroot = "http://{$host}";
     $port = getenv('MOODLE_DOCKER_WEB_PORT');
     if (!empty($port)) {
         // Extract port in case the format is bind_ip:port.
@@ -48,8 +48,8 @@ if (strpos($_SERVER['HTTP_HOST'], '.gitpod.io') !== false) {
     }
 }
 
-$CFG->dataroot  = '/var/www/moodledata';
-$CFG->admin     = 'admin';
+$CFG->dataroot = '/var/www/moodledata';
+$CFG->admin = 'admin';
 $CFG->directorypermissions = 0777;
 $CFG->smtphosts = 'mailpit:1025';
 $CFG->noreplyaddress = 'noreply@example.com';
@@ -65,29 +65,12 @@ $CFG->passwordpolicy = 0;
 $CFG->cronclionly = 0;
 $CFG->pathtophp = '/usr/local/bin/php';
 
-$CFG->phpunit_dataroot  = '/var/www/phpunitdata';
+$CFG->phpunit_dataroot = '/var/www/phpunitdata';
 $CFG->phpunit_prefix = 't_';
 define('TEST_EXTERNAL_FILES_HTTP_URL', 'http://exttests:9000');
 define('TEST_EXTERNAL_FILES_HTTPS_URL', 'http://exttests:9000');
 
-$CFG->behat_wwwroot   = 'http://webserver';
-$CFG->behat_dataroot  = '/var/www/behatdata';
-$CFG->behat_prefix = 'b_';
-$CFG->behat_profiles = array(
-    'default' => array(
-        'browser' => getenv('MOODLE_DOCKER_BROWSER'),
-        'wd_host' => 'http://selenium:4444/wd/hub',
-    ),
-);
-$CFG->behat_faildump_path = '/var/www/behatfaildumps';
-
 define('PHPUNIT_LONGTEST', true);
-
-if (getenv('MOODLE_DOCKER_APP')) {
-    $appport = getenv('MOODLE_DOCKER_APP_PORT') ?: 8100;
-
-    $CFG->behat_ionic_wwwroot = "http://moodleapp:$appport";
-}
 
 if (getenv('MOODLE_DOCKER_PHPUNIT_EXTRAS')) {
     define('TEST_SEARCH_SOLR_HOSTNAME', 'solr');
@@ -116,20 +99,6 @@ if (getenv('MOODLE_DOCKER_PHPUNIT_EXTRAS')) {
     define('TEST_ENROL_LDAP_BIND_DN', 'cn=admin,dc=openstack,dc=org');
     define('TEST_ENROL_LDAP_BIND_PW', 'password');
     define('TEST_ENROL_LDAP_DOMAIN', 'ou=Users,dc=openstack,dc=org');
-}
-
-if (property_exists($CFG, 'behat_wwwroot')) {
-    $mockhash = sha1($CFG->behat_wwwroot);
-} else {
-    $mockhash = sha1($CFG->wwwroot);
-}
-
-if (getenv('MOODLE_DOCKER_BBB_MOCK')) {
-    define('TEST_MOD_BIGBLUEBUTTONBN_MOCK_SERVER', "http://bbbmock/{$mockhash}");
-}
-
-if (getenv('MOODLE_DOCKER_MATRIX_MOCK')) {
-    define('TEST_COMMUNICATION_MATRIX_MOCK_SERVER', "http://matrixmock/{$mockhash}");
 }
 
 require_once(__DIR__ . '/lib/setup.php');

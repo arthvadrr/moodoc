@@ -8,6 +8,7 @@ moodle-*/
 .idea/
 .DS_Store
 .vscode/
+.fleet
 
 # Ignore envs
 .env
