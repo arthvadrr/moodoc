@@ -25,9 +25,11 @@ help() {
   printf "Examples:\n"
   printf "  run 4.3.3      Start a Moodle container with version 4.3.3\n"
   printf "  stop           Stop the running Moodle container\n\n"
+  printf "  down           Stop the running Moodle container and destroy the containers \n\n"
   printf "You can also run with NPM if installed:\n"
   printf  "  npm run moodoc start 4.1.3\n"
-  printf  "  npm run moodoc stop 4.1.3\n\n"
+  printf  "  npm run moodoc stop 4.1.3\n"
+  printf  "  npm run moodoc down 4.1.3\n\n"
 }
 
 #
@@ -61,7 +63,7 @@ format_version_name() {
 }
 
 #
-# Downloads moodle from moodle's github
+# Downloads moodle version from moodle's github
 #
 download_moodle() {
     version="$1"
@@ -135,6 +137,13 @@ run_moodle() {
 # Function to stop Moodle with a specific version
 #
 stop_moodle() {
+    bin/moodle-docker-compose -p "moodle$projectname" stop
+}
+
+#
+# Function to stop Moodle with a specific version and remove containers
+#
+down_moodle() {
     bin/moodle-docker-compose -p "moodle$projectname" down
 }
 
@@ -167,6 +176,10 @@ main() {
         "stop")
             set_envs "$version"
             stop_moodle "$projectname"
+            ;;
+        "down")
+            set_envs "$version"
+            down_moodle "$projectname"
             ;;
         "help")
             help

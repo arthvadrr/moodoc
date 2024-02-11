@@ -21,3 +21,16 @@ Permissions need to be given to `./moodoc.sh` and the files in bin.
 `chmod -u+x <filename>`
 
 Run `./moodoc.sh help` for more options.
+
+### `./moodoc.sh start <version>`
+
+Starts the docker containers for this version of moodle.
+If the moodle version isn't in the root directory, it will try to download it from moodlehq's github tagged releases.
+
+### `./moodoc.sh stop <version>`
+
+Stops the docker containers for this version of moodle without destroying the containers.
+
+### `./moodoc.sh down <version>`
+
+Stops the docker containers for this version of moodle and destorys the containers.
