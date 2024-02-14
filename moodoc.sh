@@ -157,6 +157,7 @@ set_envs() {
   export COMPOSE_PROJECT_NAME="moodle$projectname"
   export MOODLE_DOCKER_WEB_PORT="50${projectname}"
   export MOODLE_DOCKER_WWWROOT=$moodlepath
+  export MOODLE_DOCKER_PHP_VERSION=7.4
   export MOODLE_DOCKER_DB=pgsql
 }
 
